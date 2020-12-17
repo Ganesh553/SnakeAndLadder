@@ -4,18 +4,33 @@ public class SnakeAndLadderGame {
 	
 	final static int winPoint = 100;
 	private static int player;
+	private static int player2;
+	private static int player1;
 	private static final int Snake = 2;
 	private static final int Ladder = 1;
 	private static final int NoPlay = 0;
 	public static void main(String[] args)  {
 		
-	   int player1 = diceFunction(player);
-	   System.out.println("player1: "+player1);
+	   while(player1!=winPoint || player2!=winPoint)
+	   {
+		   player1 = diceFunction(player);
+		   System.out.println(player1);
+		   if (player1 >= winPoint) {
+			   System.out.println("Player1 is Winner");
+		   	   break;
+		   }
+		   player2 =  diceFunction(player);
+		   System.out.println("player2");
+		   if (player2 >= winPoint) {
+			   System.out.println("Player2 is Winner");
+		   	   break;
+		   } 
+	   }
 		
 	}
 	private static int diceFunction(int player) {
-		boolean flask = true;
-		while(flask) {
+		boolean flag = true;
+		while(flag) {
 			int position = (int)(Math.random()*3);
 			switch(position) {
 			case NoPlay : break;
@@ -23,10 +38,10 @@ public class SnakeAndLadderGame {
 						if (player >= winPoint)
 							return player;
 						else {
-							player += val1 + 1 ;
+							player += val1 ;
 							System.out.println("Player gets LadderCount: "+player);
 							if (player == winPoint) {
-								flask = false;
+								flag = false;
 								return player;
 							}
 						}
@@ -35,18 +50,17 @@ public class SnakeAndLadderGame {
 						if (player >= winPoint)
 							return player;
 						else {
-						player -= val2;
-						if (player <= 0 || player <= -1)
-							player =0;
-						System.out.println("Player gets SnakeCount: "+player);
-						if (player == winPoint) {
-							flask = false;
-							return player;
-		//						System.out.println("Snake Count is"+SnakeCount);
-						}
+							player -= val2;
+							if (player <= 0 || player <= -1)
+								player = 0;
+							System.out.println("Player gets SnakeCount: "+player);
+							if (player == winPoint) {
+								flag = false;
+								return player;
+							}
 						}
 						break;
-		}
+			}
 		}
 		return player;		
 	}
